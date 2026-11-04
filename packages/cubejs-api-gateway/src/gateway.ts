@@ -2402,6 +2402,7 @@ class ApiGateway {
     },
     response: any,
     responseType?: ResultType,
+    timestampWithOffset: boolean = false,
   ): ResultWrapper {
     const resultWrapper = response.data;
 
@@ -2415,6 +2416,7 @@ class ApiGateway {
       query: normalizedQuery,
       queryType,
       resType: responseType,
+      timestampWithOffset,
     };
 
     const resObj = {
@@ -2581,6 +2583,8 @@ class ApiGateway {
             annotation,
             response,
             resType,
+            // The SQL API parses these values back, so it always gets the naive format
+            apiType !== 'sql' && getEnv('timestampWithOffset'),
           );
         })
       );
