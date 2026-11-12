@@ -11,7 +11,7 @@ Dashboards enable you to:
 
 - **Monitor key metrics** – Display critical business indicators that refresh with live data
 - **Distribute analysis** – Package your findings into reports for regular distribution
-- **Build data tools** – Develop specialized applications powered by your semantic layer
+- **Build data tools** – Develop specialized applications powered by your semantic layer, or turn the dashboard into an [app](/docs/explore-analyze/apps) with its own code
 - **Present insights** – Showcase important discoveries in a polished, accessible format
 - **Discuss results** – Ask questions and agree on answers in [comments](/docs/explore-analyze/dashboards/comments) on the dashboard or on one chart
 
@@ -53,11 +53,14 @@ version.
 ### Revision history
 
 The revision history lists every published version alongside the current draft.
-Each row shows the version number, when it was published, and by whom. Select a
-version to preview it, then **Restore** to make it your current draft — publish
-again to make it the live version. The history also lists the revisions of each
-[review][ref-reviews]: select one to preview it, or click its **Open review**
-button to open the review.
+Each row shows the version number, when it was published, by whom, and one line
+on what the version changed. Cube writes that line in each viewer's language. A
+few seconds after publishing, AI may replace it with a line that names the
+change inside a widget, written in the publisher's language. Older versions may
+have no line. Select a version to preview it, then **Restore** to make it your
+current draft — publish again to make it the live version. The history also
+lists the revisions of each [review][ref-reviews]: select one to preview it, or
+click its **Open review** button to open the review.
 
 ### What viewers see
 
@@ -67,6 +70,54 @@ a summary of what changed since the previous version — added, updated, or remo
 widgets — so viewers can see which version they're looking at and what changed in
 it. (The chip is in-app only; it doesn't appear on [embedded
 dashboards](/embedding/iframe/dashboards).)
+
+## Full screen
+
+To show a published dashboard in a meeting or on a wall display, open the
+**More actions** menu (`⋮`) at the right end of the dashboard header and choose
+**Full screen**, the first item. The browser goes full screen and the dashboard
+fills it: the sidebar, the dashboard header, an open comments, scheduled
+refreshes or agent panel, and the floating chat button are hidden. Controls,
+tabs and a chart's **Explore** keep working.
+
+Press **Esc** to leave full screen. After you entered from the menu, the
+browser's **Back** button leaves too, which is the way out on a device with no
+Esc key. The dashboard comes back as you left it: your control selections and
+tabs are kept, and a panel that was open is open again.
+
+If the browser doesn't allow full screen, the dashboard still fills the browser
+window, without the sidebar, header and panels. Whenever it fills only the
+window, that way or [from a link](#full-screen-link), an **Esc** that closes an
+open list or dialog closes only that; press **Esc** again to leave.
+
+Full screen needs a window at least 920 pixels wide. In a narrower window, such
+as on a phone, the header offers no **Full screen** item and a [full-screen
+link](#full-screen-link) opens the dashboard as usual, with its sidebar and
+header. Narrowing the window below 920 pixels while in full screen brings the
+sidebar and header back and takes the browser out of full screen.
+
+### Open a dashboard in full screen from a link {#full-screen-link}
+
+Add `fullscreen=true` to a published dashboard's address to open it without the
+sidebar, header and panels, for example on a TV:
+
+```text
+/d/<deployment_id>/dashboard/<dashboard_id>?fullscreen=true
+```
+
+The link doesn't switch the browser itself to full screen: on a desktop, use
+the browser's own full-screen mode to hide its toolbar too. A reload keeps the
+view, and **Esc** leaves it. In a window narrower than 920 pixels the link opens
+the normal page, and widening the window to 920 pixels or more hides the
+sidebar and header. Only the value `true` turns it on, and it combines
+with the [control][ref-sharing-selection] and [tab][ref-tabs-url] parameters,
+so a link such as `?fullscreen=true&tg_orders.created_at=week` opens with that
+granularity picked. The link opens the dashboard in Cube, so the browser showing
+it needs to be signed in with access to the dashboard; an [embedded
+dashboard](/embedding/iframe/dashboards#show-or-hide-header-controls) hides its
+header with `showDashboardHeader=false` instead. Ask the [Dashboard
+Agent][ref-dashboard-agent] for a link to show the dashboard on a TV, and it
+answers with this link.
 
 ## Data freshness
 
@@ -117,6 +168,11 @@ per-dashboard), so every table that shows that dimension — in dashboards,
 workbooks, embedded dashboards, and Explore — offers the same links. A drill-in
 link targets a dashboard by its [slug](#dashboard-slug); see [Dimensions →
 Links][ref-dimension-links] to define them.
+
+## Cross-filtering
+
+Turn on [cross-filtering][ref-cross-filtering] to let viewers of the published
+dashboard click a chart's data to filter the other charts on it.
 
 ## Dashboard slug
 
@@ -186,9 +242,10 @@ of a long table; the progress notice (`Preparing PDF…`) stays up until the fil
 arrives. The control selections you currently have applied in your browser are
 carried into a download you start yourself — filters, time granularity switchers
 and [field switchers][ref-controls] alike, including the controls you [added to
-the dashboard's Dynamic controls widget][ref-dynamic-controls]. A scheduled
-notification has no browser session, so its attachment renders the dashboard's
-own defaults, unless that notification carries selections of its own.
+the dashboard's Dynamic controls widget][ref-dynamic-controls] — and so are your
+[cross-filters][ref-cross-filtering]. A scheduled notification has no browser
+session, so its attachment renders the dashboard's own defaults, unless that
+notification carries selections of its own.
 
 The CSV file is generated from the data already loaded in the chart. **Download
 as CSV** opens a dialog where you choose the headers and the value format, with a
@@ -225,8 +282,10 @@ out, the print version rebuilds it for A4 pages:
   as a filter with an operator but no value, is left out. A filter whose
   default is [resolved from the data][ref-control-data-defaults] is resolved
   for the print version too, so the line and the charts state the value it
-  resolves to. A dashboard with no controls, or none holding a value, prints no
-  such line.
+  resolves to. Your [cross-filters][ref-cross-filtering] follow the controls on
+  the same line, each as its field's name and condition, for example
+  `Status is completed`. A dashboard with no control holding a value and no
+  cross-filter prints no such line.
 - The controls themselves are left out, as is the [Dynamic
   controls][ref-dynamic-controls] widget: no dropdown, picker or clear button
   appears on the page. A control a viewer added to that widget still states its
@@ -286,7 +345,11 @@ Plane API print the whole dashboard only.
 [ref-workbooks]: /docs/explore-analyze/workbooks
 [ref-widgets]: /docs/explore-analyze/dashboards/widgets
 [ref-reviews]: /docs/explore-analyze/dashboards/reviews
+[ref-cross-filtering]: /docs/explore-analyze/dashboards/cross-filtering
 [ref-controls]: /docs/explore-analyze/dashboards/widgets/controls
+[ref-sharing-selection]: /docs/explore-analyze/dashboards/widgets/controls#sharing-the-current-selection
+[ref-tabs-url]: /docs/explore-analyze/dashboards/widgets/layout#tabs-on-a-published-dashboard
+[ref-dashboard-agent]: /docs/explore-analyze/dashboards/dashboard-agent
 [ref-dynamic-controls]: /docs/explore-analyze/dashboards/widgets/controls#dynamic-controls
 [ref-control-visibility]: /docs/explore-analyze/dashboards/widgets/controls#visibility
 [ref-control-data-defaults]: /docs/explore-analyze/dashboards/widgets/controls#defaults-resolved-from-the-data

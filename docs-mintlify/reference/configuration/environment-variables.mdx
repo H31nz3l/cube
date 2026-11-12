@@ -1970,11 +1970,11 @@ Specifies the maximum number of e-graph nodes that are allocated during
 the creation of a query plan in the [SQL API][ref-sql-api].
 
 Should be increased if you get the following error:
-`Error during rewrite: Can't find rewrite due to 10002 AST node limit reached.`
+`Error during rewrite: Can't find rewrite due to 100002 AST node limit reached.`
 
 | Possible Values | Default in Development | Default in Production |
 | --------------- | ---------------------- | --------------------- |
-| A valid number  | 10000                  | 10000                 |
+| A valid number  | 100000                 | 100000                |
 
 ## `CUBESQL_REWRITE_MAX_ITERATIONS`
 
@@ -2109,6 +2109,33 @@ Required port to send where collector server accept UDP connections.
 | Possible Values     | Default in Development | Default in Production |
 | ------------------- | ---------------------- | --------------------- |
 | A valid port number | `8125`                 | `8125`                |
+
+## `CUBEJS_TIMESTAMP_WITH_OFFSET`
+
+If `true`, the REST (JSON) API (including WebSocket subscriptions) and the
+GraphQL API return values of
+[time dimensions](/reference/data-modeling/dimensions#type) as ISO 8601
+timestamps with an offset.
+
+| Member | Default | With this option |
+| ------ | ------- | ---------------- |
+| Time dimension with a granularity, e.g., `orders.created_at.day` (local time in the query [`timezone`](/reference/core-data-apis/rest-api/query-format#query-properties)) | `2024-09-16T00:00:00.000` | `2024-09-16T00:00:00.000+02:00` |
+| Time dimension without a granularity, e.g., `orders.created_at` (UTC) | `2024-09-16T10:40:35.694` | `2024-09-16T10:40:35.694Z` |
+
+If the query `timezone` is missing or `UTC`, all values end with `Z`. The SQL
+API is not affected.
+
+<Warning>
+
+`fillMissingDates`, `pivot` and `timeSeries` in `@cubejs-client/core` expect
+timestamps without an offset. Do not enable this option if your front end
+relies on them.
+
+</Warning>
+
+| Possible Values | Default in Development | Default in Production |
+| --------------- | ---------------------- | --------------------- |
+| `true`, `false` | `false`                | `false`               |
 
 ## `CUBEJS_TOUCH_PRE_AGG_TIMEOUT`
 

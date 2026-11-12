@@ -1,7 +1,5 @@
 use super::TimeShiftState;
-use crate::logical_plan::{
-    DimensionInput, DimensionInputKeys, LogicalSchema, Query, Subquery, SubqueryBody, SubqueryRef,
-};
+use crate::logical_plan::{DimensionInput, LogicalSchema, Subquery, SubqueryBody, SubqueryRef};
 use crate::planner::{InputId, MemberId};
 use cubenativeutils::CubeError;
 use itertools::Itertools;
@@ -57,7 +55,6 @@ impl SubqueryState {
                 DimensionInput {
                     subquery: Rc::new(subquery),
                     keys: calculation.join_dimensions()?,
-                    keys_kind: DimensionInputKeys::Grid,
                 },
             );
         }
@@ -67,6 +64,25 @@ impl SubqueryState {
 
     fn into_members(self) -> Vec<Rc<Subquery>> {
         self.members
+    }
+
+    // Subqueries registered since `planned_from` are inputs of the replacement,
+    // so they move ahead of it.
+    fn replace_member(
+        &mut self,
+        member: Rc<Subquery>,
+        planned_from: usize,
+    ) -> Result<(), CubeError> {
+        let new_inputs = self.members.split_off(planned_from);
+        let Some(position) = self.members.iter().position(|m| m.id == member.id) else {
+            return Err(CubeError::internal(format!(
+                "Subquery {} to replace is not defined",
+                member.id
+            )));
+        };
+        self.members[position] = member;
+        self.members.splice(position..position, new_inputs);
+        Ok(())
     }
 }
 
@@ -117,20 +133,34 @@ impl PlanningScope {
         self.subquery_state.add_member(member)
     }
 
+    /// Replaces the subquery `id` with the one `plan` builds, in place. What
+    /// `plan` registers is placed ahead of it, so inputs still precede readers.
+    pub fn replan_member(
+        &mut self,
+        id: InputId,
+        plan: impl FnOnce(&mut Self) -> Result<Rc<Subquery>, CubeError>,
+    ) -> Result<(), CubeError> {
+        let planned_from = self.subquery_state.members.len();
+        let member = plan(self)?;
+        if member.id != id {
+            return Err(CubeError::internal(format!(
+                "Subquery {id} was replanned as {}",
+                member.id
+            )));
+        }
+        self.subquery_state.replace_member(member, planned_from)
+    }
+
     /// Adds `body` as a subquery its readers render in place; `schema` is
     /// what they may read from it.
-    pub fn add_inline_query(
+    pub fn add_inline(
         &mut self,
         name: String,
-        body: Rc<Query>,
+        body: impl Into<SubqueryBody>,
         schema: Rc<LogicalSchema>,
     ) -> Result<Rc<SubqueryRef>, CubeError> {
         let id = self.next_input_id();
-        self.add_member(Rc::new(Subquery::new_inline(
-            id,
-            name.clone(),
-            SubqueryBody::Query(body),
-        )))?;
+        self.add_member(Rc::new(Subquery::new_inline(id, name.clone(), body.into())))?;
         Ok(Rc::new(
             SubqueryRef::builder()
                 .id(id)

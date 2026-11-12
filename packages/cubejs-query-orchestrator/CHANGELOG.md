@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.22](https://github.com/cube-js/cube/compare/v1.8.21...v1.8.22) (2026-11-11)
+
+### Bug Fixes
+
+- **clickhouse-driver:** Kill cancelled queries and drop half-built tables ([#12337](https://github.com/cube-js/cube/issues/12337)) ([63d5d26](https://github.com/cube-js/cube/commit/63d5d2672c2b75a3c72305f12b68b1f413787a37))
+
+## [1.8.21](https://github.com/cube-js/cube/compare/v1.8.20...v1.8.21) (2026-11-09)
+
+**Note:** Version bump only for package @cubejs-backend/query-orchestrator
+
+## [1.8.20](https://github.com/cube-js/cube/compare/v1.8.19...v1.8.20) (2026-11-06)
+
+**Note:** Version bump only for package @cubejs-backend/query-orchestrator
+
+## [1.8.19](https://github.com/cube-js/cube/compare/v1.8.18...v1.8.19) (2026-11-05)
+
+**Note:** Version bump only for package @cubejs-backend/query-orchestrator
+
 ## [1.8.18](https://github.com/cube-js/cube/compare/v1.8.17...v1.8.18) (2026-11-03)
 
 **Note:** Version bump only for package @cubejs-backend/query-orchestrator

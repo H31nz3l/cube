@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.22](https://github.com/cube-js/cube/compare/v1.8.21...v1.8.22) (2026-11-11)
+
+### Bug Fixes
+
+- **oracle-driver:** Build in-database pre-aggregations ([#12601](https://github.com/cube-js/cube/issues/12601)) ([3bde433](https://github.com/cube-js/cube/commit/3bde43370d0bce10b3e8c3c68afa1496cd910303)), closes [#3127](https://github.com/cube-js/cube/issues/3127)
+- **schema-compiler:** Fix stack overflow on cross data source originalSql joins ([#12621](https://github.com/cube-js/cube/issues/12621)) ([54c367d](https://github.com/cube-js/cube/commit/54c367def8585769c06f03fc75bf2ce0ba52ad28)), closes [#12571](https://github.com/cube-js/cube/issues/12571)
+- **schema-compiler:** Keep boolean dimensions and segments boolean in ClickHouse pre-aggregations ([#12598](https://github.com/cube-js/cube/issues/12598)) ([27e426c](https://github.com/cube-js/cube/commit/27e426cac0ebba535434e6ae268bac7f5c03aeb3)), closes [#9494](https://github.com/cube-js/cube/issues/9494)
+
+### Features
+
+- **cubesql:** Push down TRIM and SPLIT_PART ([#12666](https://github.com/cube-js/cube/issues/12666)) ([38a8279](https://github.com/cube-js/cube/commit/38a8279381759c3a8389b2d10f952623bfd637da))
+
+## [1.8.21](https://github.com/cube-js/cube/compare/v1.8.20...v1.8.21) (2026-11-09)
+
+**Note:** Version bump only for package @cubejs-backend/schema-compiler
+
+## [1.8.20](https://github.com/cube-js/cube/compare/v1.8.19...v1.8.20) (2026-11-06)
+
+**Note:** Version bump only for package @cubejs-backend/schema-compiler
+
+## [1.8.19](https://github.com/cube-js/cube/compare/v1.8.18...v1.8.19) (2026-11-05)
+
+### Bug Fixes
+
+- Escape quote characters in SQL identifiers ([#12622](https://github.com/cube-js/cube/issues/12622)) ([cc12c27](https://github.com/cube-js/cube/commit/cc12c27809e7ead38040428ce5dffb8b47c2c32c))
+- **schema-compiler:** Cast whole-number BigQuery filter values to INT64 ([#12600](https://github.com/cube-js/cube/issues/12600)) ([c56e60b](https://github.com/cube-js/cube/commit/c56e60b27731178a7dd5e63e68d6acbacc664778)), closes [#10083](https://github.com/cube-js/cube/issues/10083)
+- **schema-compiler:** Keep milliseconds in ClickHouse time range bounds ([#12597](https://github.com/cube-js/cube/issues/12597)) ([6288330](https://github.com/cube-js/cube/commit/6288330d28b5a210b1ae50f3ac97ca91c456dcbf)), closes [#10326](https://github.com/cube-js/cube/issues/10326)
+- **schema-compiler:** Keep sub-second precision of ClickHouse raw time dimensions ([#12596](https://github.com/cube-js/cube/issues/12596)) ([fc119d4](https://github.com/cube-js/cube/commit/fc119d4345f9b667e50bb3154226d91171440d79)), closes [#9051](https://github.com/cube-js/cube/issues/9051)
+- **schema-compiler:** Keep the offset of unordered MSSQL queries ([#12588](https://github.com/cube-js/cube/issues/12588)) ([282f569](https://github.com/cube-js/cube/commit/282f56966f1ce4e8eb7835e752d71758ddf27b1b)), closes [#7392](https://github.com/cube-js/cube/issues/7392)
+- **schema-compiler:** Start MSSQL weeks on Monday ([#12595](https://github.com/cube-js/cube/issues/12595)) ([19c3b45](https://github.com/cube-js/cube/commit/19c3b45bf6bd878b06f193d627401232f97e772a)), closes [#7758](https://github.com/cube-js/cube/issues/7758)
+- **tesseract:** Render a case dimension without when branches as its else value ([#12590](https://github.com/cube-js/cube/issues/12590)) ([0ccc43b](https://github.com/cube-js/cube/commit/0ccc43b59f82b0740067f5e3e2f98e73e651d649)), closes [#6158](https://github.com/cube-js/cube/issues/6158)
+
+### Features
+
+- **schema-compiler:** Expose switch dimension values in /v1/meta ([#12225](https://github.com/cube-js/cube/issues/12225)) ([53d7e73](https://github.com/cube-js/cube/commit/53d7e73de1bbd114072299df241b4c4312484ace))
+
 ## [1.8.18](https://github.com/cube-js/cube/compare/v1.8.17...v1.8.18) (2026-11-03)
 
 ### Features

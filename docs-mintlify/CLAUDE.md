@@ -133,6 +133,8 @@ Make sure to use correct terms. On billing, pricing, and support pages, use **on
             - Grid
             - Tabs container
     - **Dashboard**
+      - Cross-filtering
+      - Full screen
       - Scheduled refresh
         - Data alert
       - Review (revisions, reviewers, approvals)

@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.22](https://github.com/cube-js/cube/compare/v1.8.21...v1.8.22) (2026-11-11)
+
+### Bug Fixes
+
+- **oracle-driver:** Build in-database pre-aggregations ([#12601](https://github.com/cube-js/cube/issues/12601)) ([3bde433](https://github.com/cube-js/cube/commit/3bde43370d0bce10b3e8c3c68afa1496cd910303)), closes [#3127](https://github.com/cube-js/cube/issues/3127)
+
+## [1.8.21](https://github.com/cube-js/cube/compare/v1.8.20...v1.8.21) (2026-11-09)
+
+**Note:** Version bump only for package @cubejs-backend/testing-drivers
+
+## [1.8.20](https://github.com/cube-js/cube/compare/v1.8.19...v1.8.20) (2026-11-06)
+
+**Note:** Version bump only for package @cubejs-backend/testing-drivers
+
+## [1.8.19](https://github.com/cube-js/cube/compare/v1.8.18...v1.8.19) (2026-11-05)
+
+### Bug Fixes
+
+- **schema-compiler:** Cast whole-number BigQuery filter values to INT64 ([#12600](https://github.com/cube-js/cube/issues/12600)) ([c56e60b](https://github.com/cube-js/cube/commit/c56e60b27731178a7dd5e63e68d6acbacc664778)), closes [#10083](https://github.com/cube-js/cube/issues/10083)
+
 ## [1.8.18](https://github.com/cube-js/cube/compare/v1.8.17...v1.8.18) (2026-11-03)
 
 **Note:** Version bump only for package @cubejs-backend/testing-drivers
